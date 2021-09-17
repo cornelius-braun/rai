@@ -11,14 +11,14 @@ void generateProblem(rai::Configuration& C){
   uint numObj = 4;
   for(;;){
     C.clear();
-    C.addFile("../../../../rai-robotModels/pr2/pr2.g");
+    C.addFile("../../../../robotModels/pr2/pr2.g");
     C.selectJointsByAtt({"base","armL","armR"});
     C.pruneInactiveJoints();
     C.optimizeTree();
     C["pr2L"]->ats->newNode<rai::Graph>({"logical"}, {}, {{"gripper", true}});
     C["pr2R"]->ats->newNode<rai::Graph>({"logical"}, {}, {{"gripper", true}});
     C["worldTranslationRotation"]->joint->H = 1e-0;
-    C.addFile("../../../../rai-robotModels/objects/tables.g");
+    C.addFile("../../../../robotModels/objects/tables.g");
     for(uint i=0;i<numObj;i++){
       rai::Frame *f = C.addFrame(STRING("obj"<<i), "table1", "type:ssBox size:[.1 .1 .2 .02] color:[1. 0. 0.], contact, logical={ object }, joint:rigid" );
       f->setRelativePosition({rnd.uni(-.3, .3), rnd.uni(-1.,1.), .15});
